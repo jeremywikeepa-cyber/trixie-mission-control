@@ -1,0 +1,281 @@
+import { useNavigate } from 'react-router-dom'
+import {
+  LayoutDashboard,
+  Users,
+  FileText,
+  Mail,
+  CheckSquare,
+  Calendar,
+  Wrench,
+  Search,
+  Camera,
+  Send,
+  Settings,
+  ChevronLeft,
+  ChevronRight,
+  Star,
+} from 'lucide-react'
+
+/* ── Types ── */
+
+export type NavItemId =
+  | 'dashboard' | 'pipeline' | 'quotes' | 'enquiries'
+  | 'projects' | 'schedule' | 'field' | 'feasibility'
+  | 'studio' | 'publishing' | 'settings'
+
+interface NavItem {
+  id: NavItemId
+  label: string
+  icon: React.FC<any>
+  path: string
+}
+
+interface NavSection {
+  label: string
+  items: NavItem[]
+}
+
+export interface TrixieSidebarProps {
+  activeSection: string
+  collapsed?: boolean
+  onToggle?: () => void
+  onAskAlex?: () => void
+}
+
+/* ── Navigation Data ── */
+
+const NAV_SECTIONS: NavSection[] = [
+  {
+    label: 'Overview',
+    items: [{ id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' }],
+  },
+  {
+    label: 'Sales',
+    items: [
+      { id: 'pipeline', label: 'Pipeline', icon: Users, path: '/pipeline' },
+      { id: 'quotes', label: 'Quotes', icon: FileText, path: '/quotes' },
+      { id: 'enquiries', label: 'Enquiries', icon: Mail, path: '/enquiries' },
+    ],
+  },
+  {
+    label: 'Delivery',
+    items: [
+      { id: 'projects', label: 'Projects', icon: CheckSquare, path: '/projects' },
+      { id: 'schedule', label: 'Schedule', icon: Calendar, path: '/schedule' },
+      { id: 'field', label: 'Field', icon: Wrench, path: '/field' },
+      { id: 'feasibility', label: 'Feasibility', icon: Search, path: '/feasibility' },
+    ],
+  },
+  {
+    label: 'Content',
+    items: [
+      { id: 'studio', label: 'Studio', icon: Camera, path: '/studio' },
+      { id: 'publishing', label: 'Publishing', icon: Send, path: '/publishing' },
+    ],
+  },
+  {
+    label: 'System',
+    items: [{ id: 'settings', label: 'Settings', icon: Settings, path: '/settings' }],
+  },
+]
+
+/* ── Keep Logo SVG ── */
+
+const KeepLogo = () => (
+  <svg viewBox="0 0 100 100" width="28" height="28">
+    <rect width="100" height="100" fill="#4A5240" rx="8"/>
+    <g fill="#D4AF37">
+      <rect x="25" y="20" width="12" height="60" rx="2"/>
+      <rect x="37" y="20" width="12" height="35" rx="2" transform="rotate(45 43 35)"/>
+      <rect x="37" y="55" width="12" height="35" rx="2" transform="rotate(-45 43 70)"/>
+    </g>
+  </svg>
+)
+
+/* ── Component ── */
+
+export const TrixieSidebar: React.FC<TrixieSidebarProps> = ({
+  activeSection,
+  collapsed = false,
+  onToggle,
+  onAskAlex,
+}) => {
+  const navigate = useNavigate()
+  const sidebarWidth = collapsed ? 52 : 200
+
+  return (
+    <nav
+      style={{
+        width: sidebarWidth,
+        height: '100vh',
+        background: 'var(--color-nav-bg)',
+        display: 'flex',
+        flexDirection: 'column',
+        transition: 'width 200ms ease',
+        overflow: 'hidden',
+        flexShrink: 0,
+        position: 'fixed',
+        left: 0,
+        top: 0,
+        zIndex: 100,
+      }}
+    >
+      {/* ── Logo bar ── */}
+      <div
+        style={{
+          height: 52,
+          display: 'flex',
+          alignItems: 'center',
+          padding: collapsed ? '0 12px' : '0 12px',
+          borderBottom: '1px solid rgba(255,255,255,0.08)',
+          justifyContent: collapsed ? 'center' : 'space-between',
+          gap: 8,
+        }}
+      >
+        {!collapsed && <KeepLogo />}
+        <button
+          onClick={onToggle}
+          aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          style={{
+            width: 24,
+            height: 24,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'rgba(255,255,255,0.06)',
+            border: 'none',
+            borderRadius: 4,
+            cursor: 'pointer',
+            color: 'rgba(255,255,255,0.6)',
+            flexShrink: 0,
+          }}
+        >
+          {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
+        </button>
+      </div>
+
+      {/* ── Navigation — scrollable ── */}
+      <div style={{ flex: 1, overflowY: 'auto', paddingTop: 4 }}>
+        {NAV_SECTIONS.map((section) => (
+          <div key={section.label}>
+            {!collapsed && (
+              <div
+                style={{
+                  padding: '12px 16px 4px',
+                  fontFamily: 'var(--font-family)',
+                  fontSize: 10,
+                  fontWeight: 500,
+                  color: 'var(--color-nav-section-label)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.06em',
+                }}
+              >
+                {section.label}
+              </div>
+            )}
+            {section.items.map((item) => {
+              const isActive = activeSection === item.id
+              const Icon = item.icon
+
+              return (
+                <div
+                  key={item.id}
+                  onClick={() => navigate(item.path)}
+                  title={collapsed ? item.label : undefined}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: collapsed ? 0 : 10,
+                    padding: collapsed ? '7px 0' : '7px 12px',
+                    paddingLeft: isActive && !collapsed ? 10 : collapsed ? 0 : 12,
+                    justifyContent: collapsed ? 'center' : 'flex-start',
+                    cursor: 'pointer',
+                    color: isActive ? 'var(--color-nav-text-active)' : 'var(--color-nav-text)',
+                    background: isActive ? 'var(--color-nav-item-active-bg)' : 'transparent',
+                    borderLeft: isActive ? '2px solid var(--color-nav-accent)' : '2px solid transparent',
+                    transition: 'all 120ms ease',
+                    fontFamily: 'var(--font-family)',
+                    fontSize: 13,
+                    fontWeight: 400,
+                  }}
+                >
+                  <Icon size={16} />
+                  {!collapsed && <span>{item.label}</span>}
+                </div>
+              )
+            })}
+          </div>
+        ))}
+      </div>
+
+      {/* ── Alex panel trigger (bottom) ── */}
+      <div
+        onClick={onAskAlex}
+        style={{
+          height: 52,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: collapsed ? 'center' : 'space-between',
+          padding: collapsed ? 0 : '0 12px',
+          borderTop: '1px solid rgba(255,255,255,0.08)',
+          background: 'rgba(255,255,255,0.03)',
+          cursor: 'pointer',
+          transition: 'background 120ms ease',
+          flexShrink: 0,
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: collapsed ? 0 : 8,
+            justifyContent: collapsed ? 'center' : 'flex-start',
+            width: '100%',
+          }}
+        >
+          <div
+            style={{
+              width: 24,
+              height: 24,
+              borderRadius: '50%',
+              background: 'var(--color-olive)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
+            }}
+          >
+            <Star size={12} color="white" fill="white" />
+          </div>
+          {!collapsed && (
+            <>
+              <span
+                style={{
+                  fontFamily: 'var(--font-family)',
+                  fontSize: 13,
+                  color: 'rgba(255,255,255,0.7)',
+                  fontWeight: 500,
+                }}
+              >
+                Ask Alex
+              </span>
+              <span
+                style={{
+                  fontFamily: 'var(--font-family)',
+                  fontSize: 10,
+                  color: 'rgba(255,255,255,0.25)',
+                  background: 'rgba(255,255,255,0.06)',
+                  padding: '2px 5px',
+                  borderRadius: 3,
+                  marginLeft: 'auto',
+                }}
+              >
+                ⌘K
+              </span>
+            </>
+          )}
+        </div>
+      </div>
+    </nav>
+  )
+}

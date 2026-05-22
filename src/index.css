@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== TRIXIE DESIGN TOKENS ===== */
+:root {
+  /* ── Brand ── */
+  --color-black: #111111;
+  --color-olive: #4A5240;
+  --color-bg: #F3F4F1;
+  --color-gold: #D4AF37;
+
+  /* ── Backgrounds / Surfaces ── */
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #F8F8F7;
+  --color-surface-hover: #F3F4F1;
+
+  /* ── Text ── */
+  --color-text-primary: #111111;
+  --color-text-secondary: #666666;
+  --color-text-tertiary: #999999;
+  --color-text-inverse: #FFFFFF;
+
+  /* ── Borders ── */
+  --color-border: #E8E8E8;
+  --color-border-strong: #D0D0D0;
+
+  /* ── Status — general ── */
+  --color-success: #16A34A;
+  --color-success-bg: #F0FDF4;
+  --color-warning: #D97706;
+  --color-warning-bg: #FFFBEB;
+  --color-danger: #DC2626;
+  --color-danger-bg: #FEF2F2;
+  --color-info: #2563EB;
+  --color-info-bg: #EFF6FF;
+
+  /* ── Navigation ── */
+  --color-nav-bg: #111111;
+  --color-nav-text: rgba(255, 255, 255, 0.6);
+  --color-nav-text-active: #FFFFFF;
+  --color-nav-item-active-bg: rgba(255, 255, 255, 0.08);
+  --color-nav-accent: #4A5240;
+  --color-nav-section-label: rgba(255, 255, 255, 0.3);
+
+  /* ── Typography ── */
+  --font-family: 'DM Sans', sans-serif;
+  --font-size-xs: 11px;
+  --font-size-sm: 13px;
+  --font-size-base: 14px;
+  --font-size-md: 15px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-2xl: 22px;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  /* ── Spacing ── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* ── Borders & Radius ── */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
