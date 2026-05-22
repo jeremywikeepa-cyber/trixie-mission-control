@@ -82,13 +82,12 @@ const NAV_SECTIONS: NavSection[] = [
 /* ── Keep Logo SVG ── */
 
 const KeepLogo = () => (
-  <svg viewBox="0 0 100 100" width="28" height="28">
-    <rect width="100" height="100" fill="#4A5240" rx="8"/>
-    <g fill="#D4AF37">
-      <rect x="25" y="20" width="12" height="60" rx="2"/>
-      <rect x="37" y="20" width="12" height="35" rx="2" transform="rotate(45 43 35)"/>
-      <rect x="37" y="55" width="12" height="35" rx="2" transform="rotate(-45 43 70)"/>
-    </g>
+  <svg viewBox="0 0 100 120" width="28" height="34" style={{display:'block'}}>
+    <rect width="100" height="120" fill="#4A5240" rx="10"/>
+    <path
+      d="M 28 18 L 40 18 L 40 45 L 65 18 L 80 18 L 50 55 L 80 102 L 65 102 L 40 63 L 40 102 L 28 102 Z"
+      fill="#D4AF37"
+    />
   </svg>
 )
 
@@ -132,7 +131,15 @@ export const TrixieSidebar: React.FC<TrixieSidebarProps> = ({
           gap: 8,
         }}
       >
-        {!collapsed && <KeepLogo />}
+        {!collapsed && (
+          <div style={{display:'flex', alignItems:'center', gap:8}}>
+            <KeepLogo />
+            <div style={{display:'flex', flexDirection:'column', lineHeight:1.2}}>
+              <span style={{fontFamily:'var(--font-family)', fontSize:13, fontWeight:600, color:'rgba(255,255,255,0.9)'}}>KEEP</span>
+              <span style={{fontFamily:'var(--font-family)', fontSize:9, fontWeight:400, color:'rgba(255,255,255,0.5)', letterSpacing:'0.08em'}}>MODULAR</span>
+            </div>
+          </div>
+        )}
         <button
           onClick={onToggle}
           aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
