@@ -12,6 +12,7 @@ interface Module {
   icon: React.FC<any>
   status: 'live' | 'built' | 'planned'
   path: string
+  externalUrl?: string
 }
 
 const MODULES: Module[] = [
@@ -22,6 +23,7 @@ const MODULES: Module[] = [
     icon: Users,
     status: 'built',
     path: '/pipeline',
+    externalUrl: 'https://keep-crm.replit.app',
   },
   {
     id: 'quotes',
@@ -30,6 +32,7 @@ const MODULES: Module[] = [
     icon: FileText,
     status: 'planned',
     path: '/quotes',
+    externalUrl: 'https://keep-crm.replit.app/quotes',
   },
   {
     id: 'enquiries',
@@ -38,6 +41,7 @@ const MODULES: Module[] = [
     icon: Mail,
     status: 'planned',
     path: '/enquiries',
+    externalUrl: 'https://keep-crm.replit.app/enquiries',
   },
   {
     id: 'projects',
@@ -46,6 +50,7 @@ const MODULES: Module[] = [
     icon: CheckSquare,
     status: 'built',
     path: '/projects',
+    externalUrl: 'https://field-capture.replit.app',
   },
   {
     id: 'schedule',
@@ -62,6 +67,7 @@ const MODULES: Module[] = [
     icon: Wrench,
     status: 'planned',
     path: '/field',
+    externalUrl: 'https://field-capture.replit.app',
   },
   {
     id: 'feasibility',
@@ -78,6 +84,7 @@ const MODULES: Module[] = [
     icon: Camera,
     status: 'live',
     path: '/studio',
+    externalUrl: 'https://keep-content-studio.replit.app',
   },
   {
     id: 'publishing',
@@ -86,6 +93,7 @@ const MODULES: Module[] = [
     icon: Send,
     status: 'planned',
     path: '/publishing',
+    externalUrl: 'https://modular-content-ops.replit.app',
   },
 ]
 
@@ -226,11 +234,14 @@ export function Dashboard() {
           {MODULES.map((module) => {
             const Icon = module.icon
             const statusStyle = STATUS_STYLES[module.status]
+            const href = module.externalUrl || module.path
 
             return (
               <a
                 key={module.id}
-                href={module.path}
+                href={href}
+                target={module.externalUrl ? '_blank' : undefined}
+                rel={module.externalUrl ? 'noopener noreferrer' : undefined}
                 style={{
                   background: 'var(--color-surface)',
                   border: '1px solid var(--color-border)',

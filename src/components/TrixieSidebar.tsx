@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import {
   LayoutDashboard,
   Users,
@@ -28,6 +28,7 @@ interface NavItem {
   label: string
   icon: React.FC<any>
   path: string
+  externalUrl?: string
 }
 
 interface NavSection {
@@ -52,25 +53,25 @@ const NAV_SECTIONS: NavSection[] = [
   {
     label: 'Sales',
     items: [
-      { id: 'pipeline', label: 'Pipeline', icon: Users, path: '/pipeline' },
-      { id: 'quotes', label: 'Quotes', icon: FileText, path: '/quotes' },
-      { id: 'enquiries', label: 'Enquiries', icon: Mail, path: '/enquiries' },
+      { id: 'pipeline', label: 'Pipeline', icon: Users, path: '/pipeline', externalUrl: 'https://keep-crm.replit.app' },
+      { id: 'quotes', label: 'Quotes', icon: FileText, path: '/quotes', externalUrl: 'https://keep-crm.replit.app/quotes' },
+      { id: 'enquiries', label: 'Enquiries', icon: Mail, path: '/enquiries', externalUrl: 'https://keep-crm.replit.app/enquiries' },
     ],
   },
   {
     label: 'Delivery',
     items: [
-      { id: 'projects', label: 'Projects', icon: CheckSquare, path: '/projects' },
+      { id: 'projects', label: 'Projects', icon: CheckSquare, path: '/projects', externalUrl: 'https://field-capture.replit.app' },
       { id: 'schedule', label: 'Schedule', icon: Calendar, path: '/schedule' },
-      { id: 'field', label: 'Field', icon: Wrench, path: '/field' },
+      { id: 'field', label: 'Field', icon: Wrench, path: '/field', externalUrl: 'https://field-capture.replit.app' },
       { id: 'feasibility', label: 'Feasibility', icon: Search, path: '/feasibility' },
     ],
   },
   {
     label: 'Content',
     items: [
-      { id: 'studio', label: 'Studio', icon: Camera, path: '/studio' },
-      { id: 'publishing', label: 'Publishing', icon: Send, path: '/publishing' },
+      { id: 'studio', label: 'Studio', icon: Camera, path: '/studio', externalUrl: 'https://keep-content-studio.replit.app' },
+      { id: 'publishing', label: 'Publishing', icon: Send, path: '/publishing', externalUrl: 'https://modular-content-ops.replit.app' },
     ],
   },
   {
@@ -100,6 +101,7 @@ export const TrixieSidebar: React.FC<TrixieSidebarProps> = ({
   onAskAlex,
 }) => {
   const navigate = useNavigate()
+  const location = useLocation()
   const sidebarWidth = collapsed ? 52 : 200
 
   return (
@@ -187,7 +189,13 @@ export const TrixieSidebar: React.FC<TrixieSidebarProps> = ({
               return (
                 <div
                   key={item.id}
-                  onClick={() => navigate(item.path)}
+                  onClick={() => {
+                    if (item.externalUrl && item.id !== 'dashboard') {
+                      window.open(item.externalUrl, '_blank')
+                    } else {
+                      navigate(item.path)
+                    }
+                  }}
                   title={collapsed ? item.label : undefined}
                   style={{
                     display: 'flex',
