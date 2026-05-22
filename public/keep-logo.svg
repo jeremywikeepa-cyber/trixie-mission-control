@@ -1,16 +1,10 @@
-<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <!-- Background -->
-  <rect width="100" height="100" fill="#4A5240" rx="8"/>
+<svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Olive background -->
+  <rect width="100" height="120" fill="#4A5240" rx="10"/>
   
-  <!-- K letter in gold -->
-  <g fill="#D4AF37">
-    <!-- Vertical stroke -->
-    <rect x="25" y="20" width="12" height="60" rx="2"/>
-    
-    <!-- Top diagonal stroke -->
-    <rect x="37" y="20" width="12" height="35" rx="2" transform="rotate(45 43 35)"/>
-    
-    <!-- Bottom diagonal stroke -->
-    <rect x="37" y="55" width="12" height="35" rx="2" transform="rotate(-45 43 70)"/>
-  </g>
+  <!-- Keep K logo - precise geometric path -->
+  <path
+    d="M 28 18 L 40 18 L 40 45 L 65 18 L 80 18 L 50 55 L 80 102 L 65 102 L 40 63 L 40 102 L 28 102 Z"
+    fill="#D4AF37"
+  />
 </svg>
